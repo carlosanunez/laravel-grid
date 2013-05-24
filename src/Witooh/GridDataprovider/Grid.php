@@ -27,7 +27,7 @@ abstract class Grid {
     protected $take;
     protected $sort;
 
-    public function createInstance(){
+    protected function createInstance(){
         return clone $this;
     }
 
@@ -40,7 +40,7 @@ abstract class Grid {
         $dataProvider = $this->createInstance();
         $dataProvider->repository = $repo;
         $dataProvider->input = new Collection($req);
-        $dataProvider->criteria = $this->createCriteria();
+        $dataProvider->criteria = $dataProvider->createCriteria();
         $dataProvider->fetchTotal();
         $dataProvider->fetchData();
 

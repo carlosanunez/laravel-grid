@@ -12,8 +12,8 @@ class JqGrid extends Grid
 
     protected function createCriteria()
     {
-        $this->page = $this->input->get('page');
         $this->take = $this->input->get('rows');
+        $this->page = $this->input->get('page');
         $this->setSkip($this->take, $this->page);
 
         return array(
@@ -31,8 +31,8 @@ class JqGrid extends Grid
     {
         $data = array();
 
-        foreach ($this->data as $index => $data) {
-            $data[] = array('id' => $data['id'], 'cell' => $data);
+        foreach ($this->data as $index => $value) {
+            $data[] = array('id' => $value['id'], 'cell' => $value);
         }
 
         $totalPage  = ceil($this->total / $this->take);
