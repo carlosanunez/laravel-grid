@@ -76,7 +76,8 @@ abstract class Grid
 
     protected function queryTotal()
     {
-        $this->total = DB::select('SELECT FOUND_ROWS() as total')[0]['total'];
+        $result = DB::select('SELECT FOUND_ROWS() as total');
+        $this->total = $result[0]['total'];
     }
 
     /**
