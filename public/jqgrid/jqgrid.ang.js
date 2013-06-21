@@ -18,7 +18,8 @@ angular.module('Grid', []).factory('JqGrid', [ function () {
             scroll: 1,
             autowidth: true,
             cmTemplate: { title: false },
-            multiselectWidth: 32
+            multiselectWidth: 32,
+            pager: '#pager'
         };
 
         defaultConfig = $.extend(defaultConfig, config);

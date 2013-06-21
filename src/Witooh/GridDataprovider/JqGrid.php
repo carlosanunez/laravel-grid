@@ -4,30 +4,25 @@
 namespace Witooh\GridDataprovider;
 
 use Illuminate\Support\Collection;
+use Input;
 
 class JqGrid extends Grid
 {
 
     protected $page;
 
-    protected function createCriteria()
+    protected function requestAdaptor()
     {
-        $this->take = $this->input->get('rows');
-        $this->page = $this->input->get('page');
+        $this->take = (int)Input::get('rows', 10);
+        $this->page = (int)Input::get('page', 1);
         $this->setSkip($this->take, $this->page);
-
-        return array(
-            'page'      => $this->page,
-            'skip'      => $this->skip,
-            'take'      => $this->take,
-            'condition' => array(),
-            'sort'      => array(
-                array($this->input->get('sidx'), $this->input->get('sord')),
-            ),
+        $this->condition = array();
+        $this->sort = array(
+            array(Input::get('sidx'), Input::get('sord')),
         );
     }
 
-    public function getData()
+    public function toGridData()
     {
         $data = array();
 
@@ -40,13 +35,13 @@ class JqGrid extends Grid
 
         return array(
             'page'    => $this->page,
-            'total'   => $totalPage,
+            'total'   => (int)$totalPage,
             'records' => $this->total,
             'rows'    => $data,
         );
     }
 
-    public function setSkip($take, $page)
+    protected function setSkip($take, $page)
     {
         $this->skip = $take * $page - $take;
     }
