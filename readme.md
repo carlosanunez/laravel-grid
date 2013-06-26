@@ -43,11 +43,12 @@ public function dataProvider()
         //use Laravel Query Builder
         $criteria->query->leftJoin('comment', 'comment.post_id', '=', 'post.id');
 
-        //make the dataprovider for JqGrid
+        //make the JqGrid dataprovider
         //Dont care of the parameter which jqgrid send to the sever
         //This class will detected Input by itself.
         //Frist param is the criteria object
         //Second param is primary_key for jqgrid default is 'id'
+        //return data array
         return JqGrid::make($criteria, 'post.id');
     }
 ```
