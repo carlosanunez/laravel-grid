@@ -37,7 +37,7 @@ public function dataProvider()
         //If title is not empty, it will generate sql where (AND) condition
         $criteria->compare('title', Input::get('title'));
 
-        //If title is not empty, it will generate sql where (OR) condition
+        //If content is not empty, it will generate sql where (OR) condition
         $criteria->orCompare('title', Input::get('content'));
 
         //use Laravel Query Builder
