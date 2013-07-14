@@ -3,7 +3,6 @@
 
 namespace Witooh\GridDataprovider;
 
-use Illuminate\Support\Collection;
 use Input;
 
 class JqGrid extends Grid
@@ -13,21 +12,25 @@ class JqGrid extends Grid
 
     protected function requestAdaptor()
     {
-        $this->take = (int)Input::get('rows', 10);
-        $this->page = (int)Input::get('page', 1);
+        $this->take = (int)Input::get('rows', 10) ?: 10;
+        $this->page = (int)Input::get('page', 1) ?: 1;
         $this->setSkip($this->take, $this->page);
-        $this->condition = array();
-        $this->sort = array(
-            array(Input::get('sidx'), Input::get('sord')),
-        );
+        if(Input::has('sidx')){
+            $this->sort = array(
+                array(Input::get('sidx'), Input::get('sord')),
+            );
+        }else{
+            $this->sort = null;
+        }
     }
 
     public function toGridData()
     {
         $data = array();
 
-        foreach ($this->data as $index => $value) {
-            $data[] = array('id' => $value['id'], 'cell' => $value);
+        /** @var $value \Illuminate\Database\Eloquent\Model */
+        foreach ($this->data->getIterator() as $value) {
+            $data[] = array('id' => $value->getKey(), 'cell' => $value->toArray());
         }
 
         $totalPage  = ceil($this->total / $this->take);
