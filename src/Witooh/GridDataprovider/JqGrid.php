@@ -17,7 +17,8 @@ class JqGrid extends Grid
         $this->setSkip($this->take, $this->page);
         if(Input::has('sidx')){
             $this->sort = array(
-                array(Input::get('sidx'), Input::get('sord')),
+                Input::get('sidx'),
+                Input::get('sord'),
             );
         }else{
             $this->sort = null;
